@@ -2,89 +2,70 @@
 
 [![Figure checks](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml)
 
-**把已有实验数据变成清晰、可复现的科研图表，也能检查已有图、改进绘图代码。**
+面向科研图表生成、审查与代码改进的 Agent Skill。基于 [RSS Data Visualisation Guide](https://royal-statistical-society.github.io/datavisguide/) 和 [SciencePlots](https://github.com/garrettj403/SciencePlots)，提供可复现的绘图流程与检查规则。
 
-[English](README.en.md) · [详细用法](docs/usage.md) · [示例数据](examples/README.md) · [贡献指南](CONTRIBUTING.md)
+[English](README.en.md) · [安装与接入](docs/installation.md) · [使用指南](docs/usage.md) · [示例数据](examples/README.md) · [贡献指南](CONTRIBUTING.md)
 
-适合需要准备论文、组会、课程报告或答辩图表的学生与研究人员。没有预设研究领域；目前内置时间序列对比、预测值与真实值散点图、分条件指标对比三个绘图入口。
+## 功能
 
-这是一套供 AI 编程助手调用的 **Agent Skill**，包含工作说明、检查规则和 Python 工具。当前在 Codex 中验证；也可以独立运行绘图脚本。
-
-## 看看效果
-
-以下均为仓库附带的**模拟数据**，不代表真实方法效果。`a.u.` 表示任意单位。
-
-| 时间序列对比 | 预测值与真实值 | 分条件指标对比 |
+| 模式 | 输入 | 输出 |
 |---|---|---|
-| ![时间序列模拟示例](docs/images/timeseries.png) | ![预测散点模拟示例](docs/images/parity.png) | ![指标比较模拟示例](docs/images/metrics.png) |
+| 图表生成 | 实验数据、字段定义、单位、比较目标 | PNG/PDF/SVG、绘图代码、配置及处理记录 |
+| 图表审查 | 图片、图注、使用要求 | 问题定位、依据、修改建议及核验范围 |
+| 代码改进 | Matplotlib 脚本、输入数据、修改要求 | 新版脚本、图表及变更说明 |
 
-每张图都有对应的 [CSV 和配置](examples/README.md)，可以在本地复现。时间序列示例包含缺失点与时间缺口；散点示例展示共同有效样本的处理。
+内置时间序列对比、预测值与真实值散点图、分条件指标对比三个绘图入口。适用于论文、报告与学术演示，不预设学科或数据单位。
 
-## 它能帮你做什么
+## 示例
 
-| 你的需求 | 你提供 | 它交付 |
+| 时间序列 | 预测对比 | 指标对比 |
 |---|---|---|
-| 从数据出图 | 数据文件、比较目标、字段和单位、使用场合 | 图片、绘图代码、配置及处理记录 |
-| 检查已有图 | 图片、图注和用途 | 问题位置、依据、修改建议与未核验部分 |
-| 改进绘图代码 | Matplotlib 脚本、输入数据、修改目标 | 新版脚本、新图和修改说明 |
+| ![时间序列示例](docs/images/timeseries.png) | ![预测散点示例](docs/images/parity.png) | ![指标对比示例](docs/images/metrics.png) |
 
-图表表达依据来自 [RSS Data Visualisation Guide](https://royal-statistical-society.github.io/datavisguide/)，样式由 [SciencePlots](https://github.com/garrettj403/SciencePlots) 提供。本项目增加了数据核对、缺失处理、视觉检查和复现交付流程；不是两个上游的官方产品。
+示例使用模拟数据；`a.u.` 表示任意单位。对应 [CSV 与配置](examples/README.md) 可用于复现。
 
-## 安装到 Codex
+## 安装与兼容性
 
-在 Codex 对话框发送下面这段话：
+项目采用 [Agent Skills](https://agentskills.io/specification) 目录结构，不依赖特定模型 API。可通过以下方式接入：
 
-```text
-请使用 skill-installer，从以下 GitHub 地址安装 research-figure：
-https://github.com/wjulien888-tech/research-figure-skill/tree/main/skills/research-figure
-安装后，检查 Python 3.10+ 是否可用，并在技能目录的隔离 .venv 环境中
-安装 requirements.txt 依赖。不要修改全局 Python 环境或覆盖已有同名技能。
-```
+| 接入方式 | 配置 |
+|---|---|
+| 支持 Agent Skills 的工具 | 将 `skills/research-figure/` 安装至工具识别的技能目录 |
+| 通用大模型对话或自建 Agent | 加载 `SKILL.md` 及相关参考文件；需要出图时提供 Python 执行环境 |
+| 独立脚本 | 安装 Python 依赖，按 JSON 配置执行绘图 |
 
-安装成功后，在消息中写 `$research-figure` 并描述任务。若没有被识别，可让 Codex 检查技能是否已安装、是否启用；更新未显示时可重启。[官方技能说明](https://learn.chatgpt.com/docs/build-skills)
+[安装指南](docs/installation.md) 提供 Claude Code、Cursor、Codex 的目录配置，以及通用对话和 API 接入方式。技能指令不绑定模型；文件访问、代码执行和图像查看能力由所用平台提供。已完成 Codex 流程验证及 Python 脚本测试，其他平台的端到端验证待补充。
 
-运行需要 **Python 3.10+、Matplotlib、NumPy、SciencePlots**。默认无需安装 LaTeX。中文图需要本地中文字体；缺失时会报告，不会悄悄把标签换成英文。其他支持 Agent Skills 的工具可参考其安装方式，但兼容性尚未验证。
+绘图依赖 Python 3.10+、Matplotlib、NumPy 和 SciencePlots，默认无需 LaTeX。中文标签需要可用的中文字体。
 
-## 第一次怎么用
+## 使用
 
-**提供文件 → 说清目标 → 补充必要信息 → 获取结果 → 继续修改。**
+加载技能后，提供输入文件及任务要求。以下请求不依赖特定工具的调用语法。
 
-把文件附在对话里，或给出助手有权读取的本地路径。然后根据任务复制下面一种消息即可。日常使用不需要手写 JSON 或运行终端命令。
-
-### 1. 我有数据，要画图
+**图表生成**
 
 ```text
-用 $research-figure 处理附件 results.csv。
-我想比较方法 A 和方法 B 在不同实验条件下的准确率，单位是 %。
-图用于组会，使用中文标签。先读数据并核对字段，再选择合适图形，
-交付 PNG、PDF 和可复现代码。缺少必要信息时问我，不修改原始数据。
+使用 research-figure，根据 results.csv 比较不同实验条件下方法 A 和方法 B 的准确率（%）。
+使用中文标签，输出 PNG、PDF 和可复现代码。核对字段、单位与缺失值，保留原始数据。
 ```
 
-助手会检查数据结构和单位，生成并查看图片，再交付结果。列名可以自定义；需要转换表格结构时会说明。Excel 请说明工作表，工具读取后再转换。
-
-### 2. 我有图片，要检查
+**图表审查**
 
 ```text
-用 $research-figure 检查附件图片，我准备放进论文。
-请检查坐标轴、单位、图例、配色和字号，按“位置—问题—建议”列出。
-仅凭图片无法判断的内容单独说明。本次只检查。
+使用 research-figure 审查附件图表，检查坐标轴、单位、图例、配色和字号。
+列出问题位置、依据与修改建议，并注明仅凭图片无法核验的内容。
 ```
 
-这一步交付审查意见。准确重绘需要原始数据或代码，不能从截图猜造数值。
-
-### 3. 我有代码，要改图
+**代码改进**
 
 ```text
-用 $research-figure 改进附件 plot.py，所需数据也已附上。
-保留数据处理和指标计算，调整字体、图例和布局；图宽设为 90 mm。
-另存新版脚本，交付新图与修改说明，不运行模型训练。
+使用 research-figure 修改 plot.py，输入数据已附上。
+保留数据处理与指标计算，调整字体和布局，图宽设为 90 mm。另存脚本并导出新图。
 ```
 
-拿到图后可以接着说：“把图例移到外面”“改成英文标签”“统一所有图的方法颜色”。更完整的输入示例和输出说明见 [使用指南](docs/usage.md)。
+输入格式、交付内容及迭代方式见 [使用指南](docs/usage.md)。
 
-## 不通过 AI 助手，直接试运行
-
-以下为 macOS/Linux 的终端命令。Windows 以 `py -3 -m venv .venv` 创建环境，后续使用 `.venv\Scripts\python.exe` 替代 `.venv/bin/python`。
+## 命令行
 
 ```bash
 git clone https://github.com/wjulien888-tech/research-figure-skill.git
@@ -94,27 +75,26 @@ python3 -m venv .venv
 .venv/bin/python skills/research-figure/scripts/plot_csv.py --config examples/timeseries/config.json
 ```
 
-结果写入 `work/timeseries/`，包括 PNG、PDF、SVG、绘图代码、配置和运行记录。默认不覆盖已有文件；需要重新生成时，在最后一条命令加 `--overwrite`。其他两个示例见 [examples](examples/README.md)。
+输出位于 `work/timeseries/`。默认不覆盖已有文件；重新生成时显式添加 `--overwrite`。Windows 使用 `py -3 -m venv .venv` 创建环境，后续解释器路径为 `.venv\Scripts\python.exe`。
 
-## 范围与数据原则
+## 数据与审查原则
 
-- 时间序列保留缺失断线；提供采样间隔时检查整行缺口，不默默插值。
-- 多个预测模型默认使用共同有效样本；记录排除行，散点坐标等比例并带 `y=x`。
-- 柱图保留零基线；误差线必须来自已提供且说明含义的数值。
-- 图片输出后，助手还需要实际查看；脚本运行成功不等于视觉或科学审查通过。
-- 不凭空制造数据、误差线或显著性，不为美观擅自改变统计口径。
-- 复杂多面板和其他图形可以由助手编写代码，但不属于三个已内置入口。套用样式不能保证满足期刊全部要求。
+- 保留缺失断线，记录筛选和转换，不擅自插值、平滑或删除异常值。
+- 预测对比采用共同有效样本、等比例坐标及 `y=x` 参考线。
+- 柱图保留零基线；误差线必须有明确数值与定义。
+- 导出后检查实际图像；渲染成功不等于科学结论或期刊要求已核验。
+- 截图审查不用于还原原始数值或判断统计显著性。
 
-仓库只含模拟数据。你自己的实验输入和生成目录应留在本地；`work/` 默认不纳入版本控制。数据会由你使用的 AI 工具读取，请按该工具和所在机构的数据规则选择输入。
+复杂图形需另行编写和验证绘图代码。仓库仅包含模拟数据；`work/` 默认不纳入版本控制。
 
-## 开发与测试
+## 测试
 
 ```bash
 .venv/bin/python skills/research-figure/tests/test_plot_csv.py
 ```
 
-测试覆盖缺失值、时间顺序、时区混用、共同样本、柱图基线、误差线、物理导出尺寸、输入不变和独立脚本复现。另附 GitHub Actions 工作流进行测试与模拟出图。测试不覆盖助手的所有选图判断或视觉审查质量。详见 [贡献指南](CONTRIBUTING.md)。
+GitHub Actions 在 Python 3.10、3.12、3.14 上运行回归测试和模拟出图。检查覆盖数据处理、导出尺寸与脚本复现，不代替对模型选图判断和审查质量的评估。
 
-## 许可与致谢
+## 许可
 
-原创代码采用 **MIT**；改编自 RSS 的指南内容采用 **CC BY 4.0** 并保留署名、来源和修改说明。SciencePlots 作为 **MIT** 依赖调用。各部分范围见 [LICENSE.md](LICENSE.md)，精确上游版本见 [来源说明](skills/research-figure/references/sources.md)。链接到的外部资料及用户数据不因本项目而改变许可。
+原创代码采用 **MIT**；RSS 改编指南采用 **CC BY 4.0**；SciencePlots 为 **MIT** 依赖。各部分范围、署名和改编记录见 [LICENSE.md](LICENSE.md) 与 [来源说明](skills/research-figure/references/sources.md)。本项目为独立下游项目。

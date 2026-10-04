@@ -2,48 +2,53 @@
 
 [![Figure checks](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml)
 
-Turn existing experiment results into clear, reproducible figures; review images and improve Matplotlib code.
+An Agent Skill for research figure generation, review and Matplotlib code improvement. Combines guidance adapted from the [RSS Data Visualisation Guide](https://royal-statistical-society.github.io/datavisguide/) with [SciencePlots](https://github.com/garrettj403/SciencePlots).
 
-[中文](README.md) · [Examples](examples/README.md) · [Contributing](CONTRIBUTING.md)
+[中文](README.md) · [Integration](docs/installation.md) · [Examples](examples/README.md) · [Contributing](CONTRIBUTING.md)
 
-An Agent Skill for students and researchers preparing papers, presentations and experiment reports. It combines guidance adapted from the [RSS Data Visualisation Guide](https://royal-statistical-society.github.io/datavisguide/) with [SciencePlots](https://github.com/garrettj403/SciencePlots). This is an independent downstream project, not an official product of either upstream.
+## Capabilities
 
-## What it does
+| Mode | Input | Output |
+|---|---|---|
+| Figure generation | Data, field definitions, units and comparison objective | Figures, scripts, configuration and processing records |
+| Figure review | Image, caption and requirements | Located issues, rationale, recommendations and verification limits |
+| Code improvement | Matplotlib script, input data and requested changes | Revised script, figures and change summary |
 
-- **Data to figures:** three built-in entry points for time-series comparisons, observed/predicted scatter plots and grouped metric comparisons.
-- **Figure review:** an assistant inspects images for axis, legend, typography and communication issues, separating observable problems from unverified claims.
-- **Code improvement:** update existing Matplotlib code while preserving the input data and calculation conventions.
+Three built-in entry points cover time series, observed/predicted scatter plots and grouped metric comparisons. No research domain or data units are assumed.
+
+## Examples
 
 ![Synthetic time-series example](docs/images/timeseries.png)
 
-All bundled examples are synthetic. `a.u.` means arbitrary units. See [datasets and configurations](examples/README.md) for reproduction.
+Bundled examples are synthetic; `a.u.` means arbitrary units. [CSV files and configurations](examples/README.md) are provided for reproduction.
 
-## Install in Codex
+## Installation and compatibility
 
-Send this prompt in Codex:
+The package follows the [Agent Skills](https://agentskills.io/specification) directory format and has no model-specific API dependency.
+
+- **Skills-compatible tools:** install `skills/research-figure/` in the host's skills directory.
+- **General chat interfaces or custom agents:** load `SKILL.md` and the required reference files. Provide Python execution for rendering and image access for visual review.
+- **Standalone use:** execute the Python scripts with a JSON configuration.
+
+Project-level destinations include `.claude/skills/research-figure/` for Claude Code, `.cursor/skills/research-figure/` for Cursor and `.agents/skills/research-figure/` for Codex. See the [integration guide](docs/installation.md) for sources, setup and manual loading.
+
+Instructions are model-independent; execution capabilities depend on the host. The Codex workflow and Python scripts have been validated. End-to-end tests for other hosts remain pending. A text-only model can assist with code and instructions but cannot claim to have rendered or visually inspected a figure.
+
+Requires Python 3.10+, Matplotlib, NumPy and SciencePlots. TeX is not required by default. Non-Latin labels need a suitable installed font. The optional `agents/openai.yaml` contains Codex UI metadata; it is not required by the core workflow.
+
+## Usage
+
+After loading the skill, provide accessible input files and a task description:
 
 ```text
-Use skill-installer to install research-figure from:
-https://github.com/wjulien888-tech/research-figure-skill/tree/main/skills/research-figure
-Then check for Python 3.10+ and install requirements.txt in an isolated .venv
-inside the installed skill folder. Do not change global Python packages or
-replace an existing skill with the same name.
+Use research-figure to compare Method A and Method B across experimental
+conditions in results.csv. The metric is accuracy (%). Deliver PNG, PDF and
+reproducible code. Check fields, units and missing values; preserve source data.
 ```
 
-Attach a dataset or provide an accessible local path, then send:
+For review, provide an image and request located issues, rationale and recommendations. For code improvement, provide the script and its input data, specifying which calculations must remain unchanged. Invocation syntax is host-specific; the task description is portable.
 
-```text
-Use $research-figure to compare Method A and Method B in this dataset.
-The metric is accuracy (%), grouped by experimental condition.
-Prepare a presentation figure and deliver PNG, PDF and reproducible code.
-Read the data first and ask about any missing meaning or units.
-```
-
-For review, attach an image and ask for issues, locations and suggested fixes. For code improvement, provide the plotting script **and its input data**, then describe the changes. Continue in the same conversation to revise a figure. Users do not need to write JSON or run Python themselves.
-
-Requires Python 3.10+, Matplotlib, NumPy and SciencePlots. No TeX installation is required by default. Non-Latin labels require an installed font covering the characters. Codex is the validated host; compatibility with other Agent Skills hosts has not been tested. See [official skill documentation](https://learn.chatgpt.com/docs/build-skills) for discovery and invocation.
-
-## Standalone quickstart
+## Command line
 
 ```bash
 git clone https://github.com/wjulien888-tech/research-figure-skill.git
@@ -53,24 +58,22 @@ python3 -m venv .venv
 .venv/bin/python skills/research-figure/scripts/plot_csv.py --config examples/timeseries/config.json
 ```
 
-On Windows, create the environment with `py -3 -m venv .venv` and use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
+Outputs are written to `work/timeseries/`. Add `--overwrite` to replace existing outputs explicitly. On Windows, use `py -3 -m venv .venv` and `.venv\Scripts\python.exe`.
 
-Results are written to `work/timeseries/`: PNG, PDF, SVG, scripts, resolved configuration and a rendering log. Existing results are protected; add `--overwrite` to replace them intentionally. CSV is supported directly; Excel requires selecting a sheet and converting it first.
+## Data and review principles
 
-## Boundaries
+Preserve missing-data gaps and record filtering. Use common finite rows and equal axes for prediction comparisons. Retain zero baselines for bars, and require supplied values and definitions for error bars. Do not invent data, uncertainty or significance.
 
-Time-series gaps remain gaps. Prediction comparisons use a common finite-row mask, identical axis limits and equal aspect. Bar charts retain zero, and error bars must have supplied values and an explicit meaning. Filtering is recorded; the tool does not silently smooth data or invent uncertainty.
+Rendered figures require visual inspection. Successful execution does not establish scientific validity or journal compliance. Screenshot-only review cannot validate source values. Complex figures require additional code and validation.
 
-A successful render does not validate scientific claims or journal compliance. An assistant must still inspect the exported image. Screenshot-only review cannot validate source values or significance. More complex figures require custom code and case-specific validation.
-
-The repository includes synthetic data only. Keep your research inputs and outputs local; `work/` is ignored. Data provided to an assistant is governed by your chosen host and institutional policies.
-
-## Tests and license
+## Tests
 
 ```bash
 .venv/bin/python skills/research-figure/tests/test_plot_csv.py
 ```
 
-The regression suite checks numerical and rendering invariants, including export dimensions and standalone reproduction. It does not establish the quality of every assistant judgment. See [CONTRIBUTING.md](CONTRIBUTING.md) for extension and testing guidance.
+GitHub Actions runs regression checks and synthetic rendering on Python 3.10, 3.12 and 3.14. These checks cover data and rendering invariants, not every model decision or review judgment.
 
-Original code: **MIT**. RSS-adapted guidance: **CC BY 4.0**, with attribution and change notices. SciencePlots: **MIT** dependency. See [LICENSE.md](LICENSE.md) and [upstream provenance](skills/research-figure/references/sources.md). No proprietary datasets or third-party fonts are bundled.
+## License
+
+Original code: **MIT**. RSS-adapted guidance: **CC BY 4.0**. SciencePlots: **MIT** dependency. See [LICENSE.md](LICENSE.md) and [upstream provenance](skills/research-figure/references/sources.md). This is an independent downstream project.
