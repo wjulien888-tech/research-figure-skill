@@ -1,0 +1,15 @@
+{
+  "kind": "metrics",
+  "input": "data.csv",
+  "output_dir": "../../work/metrics",
+  "synthetic": true,
+  "profile": "report",
+  "category": "scenario",
+  "model": "model",
+  "value": "rmse",
+  "error": "sd",
+  "error_type": "SD (illustrative)",
+  "x_label": "Condition",
+  "y_label": "RMSE (a.u.)",
+  "title": "Metric comparison"
+}

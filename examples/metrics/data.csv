@@ -1,0 +1,7 @@
+scenario,model,rmse,sd
+Condition 1,Method A,4.1,0.4
+Condition 1,Baseline,6.0,0.7
+Condition 2,Method A,7.2,0.8
+Condition 2,Baseline,10.5,1.1
+Condition 3,Method A,3.3,0.3
+Condition 3,Baseline,5.2,0.5

@@ -1,0 +1,4 @@
+interface:
+  display_name: "科研图表制作与检查"
+  short_description: "基于 RSS 图表指南与 SciencePlots，制作、审查和改进科研图表"
+  default_prompt: "请用 $research-figure 根据我的实验数据制作科研图表，检查表达与排版，并交付可复现代码。"

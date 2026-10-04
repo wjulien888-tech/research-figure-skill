@@ -1,0 +1,21 @@
+{
+  "kind": "timeseries",
+  "input": "data.csv",
+  "output_dir": "../../work/timeseries",
+  "synthetic": true,
+  "profile": "report",
+  "x": "time",
+  "x_type": "datetime",
+  "series": [
+    "actual",
+    "predicted"
+  ],
+  "expected_interval": 900,
+  "x_label": "Time",
+  "y_label": "Response (a.u.)",
+  "title": "Time-series comparison",
+  "labels": {
+    "actual": "Observed",
+    "predicted": "Predicted"
+  }
+}

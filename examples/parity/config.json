@@ -1,0 +1,20 @@
+{
+  "kind": "parity",
+  "input": "data.csv",
+  "output_dir": "../../work/parity",
+  "synthetic": true,
+  "profile": "report",
+  "actual": "actual",
+  "series": [
+    "model_a",
+    "baseline"
+  ],
+  "x_label": "Observed (a.u.)",
+  "y_label": "Predicted (a.u.)",
+  "title": "Observed vs. predicted",
+  "labels": {
+    "model_a": "Method A",
+    "baseline": "Baseline"
+  },
+  "height_mm": 135
+}

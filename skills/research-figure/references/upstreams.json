@@ -1,0 +1,43 @@
+[
+  {
+    "name": "rss",
+    "repository": "https://github.com/royal-statistical-society/datavisguide",
+    "commit": "ef2554544ecc4db9624453a407cf2ecc9bd58656",
+    "retrieved": "2026-10-04",
+    "files": [
+      {
+        "path": "LICENCE.md",
+        "url": "https://raw.githubusercontent.com/royal-statistical-society/datavisguide/ef2554544ecc4db9624453a407cf2ecc9bd58656/LICENCE.md",
+        "sha256": "465cd1bb31af4be4865e17574ed54eb7ba388ce3dd72bef1357b5de5647914df"
+      },
+      {
+        "path": "docs/principles.qmd",
+        "url": "https://raw.githubusercontent.com/royal-statistical-society/datavisguide/ef2554544ecc4db9624453a407cf2ecc9bd58656/docs/principles.qmd",
+        "sha256": "21d4572e6cff6b2330d4cb8a594629374a70b2e59fd88d63a3a1a11433953e2b"
+      },
+      {
+        "path": "docs/styling.qmd",
+        "url": "https://raw.githubusercontent.com/royal-statistical-society/datavisguide/ef2554544ecc4db9624453a407cf2ecc9bd58656/docs/styling.qmd",
+        "sha256": "005c29ec16c4a35bb204dad48e3264e049ed0f8a502bf8264108eb57b1c85d39"
+      }
+    ]
+  },
+  {
+    "name": "scienceplots",
+    "repository": "https://github.com/garrettj403/SciencePlots",
+    "commit": "b9b16959570bd2fbc9ff5118bacc423c3bddd592",
+    "retrieved": "2026-10-04",
+    "files": [
+      {
+        "path": "LICENSE",
+        "url": "https://raw.githubusercontent.com/garrettj403/SciencePlots/b9b16959570bd2fbc9ff5118bacc423c3bddd592/LICENSE",
+        "sha256": "9e5d935909270a14c3e9dc5ede0bcfc73a69fc3411f70ddd9e05065602a46cdb"
+      },
+      {
+        "path": "README.md",
+        "url": "https://raw.githubusercontent.com/garrettj403/SciencePlots/b9b16959570bd2fbc9ff5118bacc423c3bddd592/README.md",
+        "sha256": "915a3942c4b999f12cf4b708fa3b29a07e1d1717397b3425c1c7a7888ecccc22"
+      }
+    ]
+  }
+]
