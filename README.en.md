@@ -1,5 +1,7 @@
 # Research Figure Skill
 
+[![Figure checks](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml)
+
 Turn existing experiment results into clear, reproducible figures; review images and improve Matplotlib code.
 
 [中文](README.md) · [Examples](examples/README.md) · [Contributing](CONTRIBUTING.md)

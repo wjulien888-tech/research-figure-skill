@@ -1,5 +1,7 @@
 # Research Figure Skill
 
+[![Figure checks](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml)
+
 **把已有实验数据变成清晰、可复现的科研图表，也能检查已有图、改进绘图代码。**
 
 [English](README.en.md) · [详细用法](docs/usage.md) · [示例数据](examples/README.md) · [贡献指南](CONTRIBUTING.md)
