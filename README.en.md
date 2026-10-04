@@ -22,21 +22,48 @@ The project adds six data/research constraints, common-sample handling, missing-
 
 ## Review cases
 
-**The same source data can produce a different impression when its presentation changes.**
+**Improve how experimental results are organized, read and compared—from overlapping traces to dense samples and multi-panel figures.**
 
-Both panels below use SciencePlots. The left panel deliberately truncates the baseline and omits supplied uncertainty; the right panel uses the skill renderer to restore zero and display the supplied SD values.
+Five of seven cases are shown below. Drafts appear on the left and rule-guided revisions on the right. Both sides use SciencePlots; changes concern chart choice, layout and faithful presentation. All data are synthetic, with reproducible code and verification records.
+
+### Multiple models: overlapping traces to shared-scale panels
+
+Six models and a reference compete in one plot. Separate panels pair each model with the reference, with shared limits and direct model titles.
+
+![Seven overlapping traces revised into six shared-scale panels](docs/images/review-multimodel.png)
+
+### Dense samples: opaque scatter to sample density
+
+Overlapping points hide the concentration of 6,000 samples. Hexagonal counts expose dense and sparse regions while retaining every sample, equal axes and the identity line. The logarithmic count scale is explicitly labeled.
+
+![The same 6000 samples shown as scatter and hexagonal counts](docs/images/review-density.png)
+
+### Ablation and baselines: rotated labels to ranked intervals
+
+Long names and unsorted bars make ten configurations difficult to compare. Ranked horizontal intervals keep labels readable, emphasize the full model and preserve every supplied MAE and SD value.
+
+![Vertical bars revised into ranked horizontal intervals](docs/images/review-labels.png)
+
+### Conditions: independent scales to a common scale
+
+Independent autoscaling makes conditions with different error magnitudes appear similar. When the objective is to compare absolute error, a shared y-axis makes those differences directly comparable.
+
+![Independent y-axes revised into a shared scale](docs/images/review-panels.png)
+
+### Metrics: restore the baseline and uncertainty
+
+The draft truncates the baseline and omits supplied uncertainty. The revision restores zero, shows the supplied SD and adds hatching. Values **3.3 and 5.2** appear with a visible bar-length ratio of **7.33:1** on the truncated axis; restoring zero gives the actual ratio, **1.58:1**.
 
 ![Synthetic metric comparison before and after review](docs/images/review-metrics.png)
 
-In the last group, values **3.3 and 5.2** appear as visible bar lengths with a ratio of **7.33:1** on a baseline truncated at 3. Restoring zero gives the actual value ratio, **1.58:1**, without changing the values.
+Two further cases address sample selection and missing observations:
 
 | Case | Issue | Revision |
 |---|---|---|
-| Metrics | Truncated baseline; omitted supplied SD | Zero baseline, defined error bars, model hatching |
-| Prediction comparison | 90/89 samples; unequal axes | 89 common samples with excluded-row record, equal axes, y=x |
+| Prediction comparison | 90/89 samples; unequal axes | 89 common samples with excluded-row record, equal axes, identity line |
 | Time series | Lines bridge missing observations | Visible gaps; finite source values preserved |
 
-These deliberately constructed synthetic fixtures illustrate the rules; they are not evaluations of other tools or AI models. [Full cases](examples/review-case/README.md) include images, reasoning, scripts and verification records. Sample selection requires data or code, not just a screenshot.
+[Full cases and reproduction](examples/review-case/README.md) include all seven images, rule mappings and verification records. The first four use custom Matplotlib code guided by the skill; the remaining three call its built-in renderer. These are reproducible demonstrations, not a benchmark of automated model review. Sample selection requires supporting data or code.
 
 ## Workflow
 

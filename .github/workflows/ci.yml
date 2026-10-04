@@ -28,3 +28,5 @@ jobs:
         run: python skills/research-figure/scripts/demo.py --output work/ci-demo --render
       - name: Verify review case studies
         run: python examples/review-case/render.py --output work/ci-review
+      - name: Verify visual review gallery
+        run: python examples/review-case/render_visual.py --output work/ci-visual

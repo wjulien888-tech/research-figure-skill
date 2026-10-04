@@ -1,0 +1,11 @@
+method,mae,sd
+Full model,4.700000,0.250000
+Without feature selection,6.300000,0.420000
+Without normalization,7.600000,0.550000
+Without temporal context,9.100000,0.670000
+Without regularization,6.800000,0.470000
+Without calibration,5.600000,0.310000
+Linear baseline,11.200000,0.780000
+Tree baseline,8.400000,0.610000
+Reduced training set,9.800000,0.700000
+Noisy input condition,10.500000,0.730000

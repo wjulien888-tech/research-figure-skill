@@ -12,6 +12,7 @@ python3 -m venv .venv
 .venv/bin/python skills/research-figure/tests/test_plot_csv.py
 .venv/bin/python skills/research-figure/scripts/demo.py --output work/demo-new --render
 .venv/bin/python examples/review-case/render.py --output work/review-new
+.venv/bin/python examples/review-case/render_visual.py --output work/visual-review-new
 ```
 
 演示输出目录必须尚不存在。Windows 使用 `.venv\Scripts\python.exe`。受限环境中，如字体缓存不可写，设置本次命令的 `MPLCONFIGDIR` / `XDG_CACHE_HOME` 指向可写缓存目录。

@@ -1,0 +1,85 @@
+{
+  "synthetic": true,
+  "type": "illustrative custom-plot revisions; not an AI benchmark",
+  "cases": {
+    "multimodel": {
+      "input": "examples/review-case/data/multimodel.csv",
+      "sha256": "4949fe2760ea71eb6751c0e4ccb9a6c3580154c9e6eead36b1d559ffe52d5be2",
+      "source_unchanged": true,
+      "checks": {
+        "methods": 6,
+        "observations_per_trace": 121,
+        "all_values_preserved": true,
+        "shared_y_limits": [
+          20,
+          85
+        ],
+        "reference_in_every_panel": true
+      }
+    },
+    "density": {
+      "input": "examples/review-case/data/density.csv",
+      "sha256": "af6cee137a46113f247b6c0b2120964407f338096e4413874354efc3d65abb6c",
+      "source_unchanged": true,
+      "checks": {
+        "source_samples": 6000,
+        "sum_of_bin_counts": 6000,
+        "gridsize": 32,
+        "count_color_scale": "log",
+        "same_axes": true,
+        "transformation": "hexagonal count aggregation; no sample removal"
+      }
+    },
+    "labels": {
+      "input": "examples/review-case/data/labels.csv",
+      "sha256": "6f77a7f54948ef56fe34021a35bae50e93c8461690b27087f1131c4362cbed58",
+      "source_unchanged": true,
+      "checks": {
+        "categories": 10,
+        "all_values_and_supplied_sd_preserved": true,
+        "display_order": [
+          "Full model",
+          "Without calibration",
+          "Without feature selection",
+          "Without regularization",
+          "Without normalization",
+          "Tree baseline",
+          "Without temporal context",
+          "Reduced training set",
+          "Noisy input condition",
+          "Linear baseline"
+        ],
+        "ordering": "ascending MAE",
+        "uncertainty": "supplied synthetic SD; not estimated by the renderer"
+      }
+    },
+    "panels": {
+      "input": "examples/review-case/data/panels.csv",
+      "sha256": "6d54fae0d51be484a66c70aaa92d06d8d202245c4f2c19e7a10a573fbb651fbc",
+      "source_unchanged": true,
+      "checks": {
+        "conditions": 3,
+        "observations_per_condition": 121,
+        "all_values_preserved": true,
+        "draft_y_limits": [
+          [
+            0.62548815,
+            1.4110608500000001
+          ],
+          [
+            3.1274398,
+            7.055302200000001
+          ],
+          [
+            10.0078055,
+            22.5769665
+          ]
+        ],
+        "reviewed_y_limits": [
+          0,
+          24
+        ]
+      }
+    }
+  }
+}
