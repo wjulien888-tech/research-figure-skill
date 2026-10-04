@@ -2,25 +2,53 @@
 
 [![Figure checks](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml)
 
-An Agent Skill for research figure generation, review and Matplotlib code improvement. Combines guidance adapted from the [RSS Data Visualisation Guide](https://royal-statistical-society.github.io/datavisguide/) with [SciencePlots](https://github.com/garrettj403/SciencePlots).
+[![Upstream: RSS](https://img.shields.io/badge/Guidance-Royal%20Statistical%20Society-243746)](https://github.com/royal-statistical-society/datavisguide)
+[![SciencePlots stars](https://img.shields.io/github/stars/garrettj403/SciencePlots?style=flat&label=SciencePlots%20stars)](https://github.com/garrettj403/SciencePlots)
 
-[中文](README.md) · [Integration](docs/installation.md) · [Examples](examples/README.md) · [Contributing](CONTRIBUTING.md)
+**Turn Royal Statistical Society visualization guidance and SciencePlots into an executable research figure generation and review skill.**
 
-## Capabilities
+Review data, figures or Matplotlib code; revise their presentation and deliver reproducible outputs. The workflow is model-independent and assumes no research domain or units.
+
+[中文](README.md) · [Review cases](examples/review-case/README.md) · [Integration](docs/installation.md) · [Contributing](CONTRIBUTING.md)
+
+## Upstream foundations
+
+| Project | Source | Role in this skill |
+|---|---|---|
+| **[RSS Data Visualisation Guide](https://github.com/royal-statistical-society/datavisguide)** | *Best Practices for Data Visualisation*, published by the Royal Statistical Society | 12 adapted review rules covering axes, aspect ratios, colors, accessibility and annotations |
+| **[SciencePlots](https://github.com/garrettj403/SciencePlots)** | Matplotlib scientific styles maintained by John Garrett and contributors | Actual style dependency, with no-TeX defaults, font checks and dimension-preserving export |
+
+The project adds six data/research constraints, common-sample handling, missing-data records and reproducible scripts. See the [rule mapping](skills/research-figure/references/review-rules.md) and [versioned provenance](skills/research-figure/references/sources.md). The Stars badge belongs to SciencePlots. This is an independent downstream project.
+
+## Review cases
+
+**The same source data can produce a different impression when its presentation changes.**
+
+Both panels below use SciencePlots. The left panel deliberately truncates the baseline and omits supplied uncertainty; the right panel uses the skill renderer to restore zero and display the supplied SD values.
+
+![Synthetic metric comparison before and after review](docs/images/review-metrics.png)
+
+In the last group, values **3.3 and 5.2** appear as visible bar lengths with a ratio of **7.33:1** on a baseline truncated at 3. Restoring zero gives the actual value ratio, **1.58:1**, without changing the values.
+
+| Case | Issue | Revision |
+|---|---|---|
+| Metrics | Truncated baseline; omitted supplied SD | Zero baseline, defined error bars, model hatching |
+| Prediction comparison | 90/89 samples; unequal axes | 89 common samples with excluded-row record, equal axes, y=x |
+| Time series | Lines bridge missing observations | Visible gaps; finite source values preserved |
+
+These deliberately constructed synthetic fixtures illustrate the rules; they are not evaluations of other tools or AI models. [Full cases](examples/review-case/README.md) include images, reasoning, scripts and verification records. Sample selection requires data or code, not just a screenshot.
+
+## Workflow
+
+**Input → data and expression checks → revision → visual inspection → reproducible delivery**
 
 | Mode | Input | Output |
 |---|---|---|
-| Figure generation | Data, field definitions, units and comparison objective | Figures, scripts, configuration and processing records |
-| Figure review | Image, caption and requirements | Located issues, rationale, recommendations and verification limits |
-| Code improvement | Matplotlib script, input data and requested changes | Revised script, figures and change summary |
+| Figure generation | Data, definitions, units and objective | Figures, scripts, configuration and processing records |
+| Figure review | Image, caption and supporting data when available | Located issues, rationale and verification limits |
+| Code improvement | Matplotlib code, data and requirements | Revised code, figures and change summary |
 
-Three built-in entry points cover time series, observed/predicted scatter plots and grouped metric comparisons. No research domain or data units are assumed.
-
-## Examples
-
-![Synthetic time-series example](docs/images/timeseries.png)
-
-Bundled examples are synthetic; `a.u.` means arbitrary units. [CSV files and configurations](examples/README.md) are provided for reproduction.
+Rules guide the assistant; scripts perform deterministic processing and rendering. Built-in entry points cover time series, prediction scatter and grouped metrics. Complex figures require additional code and validation.
 
 ## Installation and compatibility
 

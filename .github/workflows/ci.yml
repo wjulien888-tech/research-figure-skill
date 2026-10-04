@@ -26,3 +26,5 @@ jobs:
         run: python skills/research-figure/tests/test_plot_csv.py
       - name: Render synthetic examples
         run: python skills/research-figure/scripts/demo.py --output work/ci-demo --render
+      - name: Verify review case studies
+        run: python examples/review-case/render.py --output work/ci-review

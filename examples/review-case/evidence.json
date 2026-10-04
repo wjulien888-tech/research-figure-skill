@@ -1,0 +1,46 @@
+{
+  "synthetic": true,
+  "fixture": "deliberately constructed issues; not an AI benchmark",
+  "cases": {
+    "metrics": {
+      "source": "examples/metrics/data.csv",
+      "sha256": "19f5d1e90a63b5cf75ab8893b832bd8b3ecd1a66d978e9501fab1cc35c91e817",
+      "source_unchanged": true,
+      "checks": {
+        "zero_baseline": true,
+        "supplied_error_bars": true,
+        "bar_values_preserved": true,
+        "condition_3_value_ratio": 1.575757575757576,
+        "condition_3_draft_visible_bar_ratio": 7.333333333333338
+      }
+    },
+    "parity": {
+      "source": "examples/parity/data.csv",
+      "sha256": "73b3348a6a3ef437b29a2a86038ec5e5c012e07d6f7a06cc4fe27a12226c6b14",
+      "source_unchanged": true,
+      "checks": {
+        "equal_limits_and_aspect": true,
+        "reference_y_equals_x": true,
+        "common_samples_per_model": 89,
+        "excluded_csv_rows": [
+          6
+        ]
+      }
+    },
+    "timeseries": {
+      "source": "examples/timeseries/data.csv",
+      "sha256": "f26784db75349e72bde0b71728186cf53ed2c156958763075576ee62add6488b",
+      "source_unchanged": true,
+      "checks": {
+        "finite_values_preserved": true,
+        "missing_counts": {
+          "actual": 0,
+          "predicted": 1
+        },
+        "gap_before_csv_rows": [
+          25
+        ]
+      }
+    }
+  }
+}

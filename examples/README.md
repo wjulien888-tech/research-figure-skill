@@ -1,5 +1,7 @@
 # Examples / 可复现示例
 
+[审查与修订完整案例 / Review case studies](review-case/README.md)：对照图、规则解释与验证记录。以下为基础数据和单图配置。
+
 All values are synthetic and generated with NumPy seed `20261004`. These are plotting examples, not evidence of model quality. `a.u.` means arbitrary units. Error bars in the metric example are illustrative supplied values, not estimated from repeated experiments.
 
 所有示例都是模拟数据，不代表任何真实实验；误差条也是预设的演示值。CSV 与配置可直接读取，不含本机绝对路径。

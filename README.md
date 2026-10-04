@@ -2,27 +2,53 @@
 
 [![Figure checks](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/wjulien888-tech/research-figure-skill/actions/workflows/ci.yml)
 
-面向科研图表生成、审查与代码改进的 Agent Skill。基于 [RSS Data Visualisation Guide](https://royal-statistical-society.github.io/datavisguide/) 和 [SciencePlots](https://github.com/garrettj403/SciencePlots)，提供可复现的绘图流程与检查规则。
+[![Upstream: RSS](https://img.shields.io/badge/Guidance-Royal%20Statistical%20Society-243746)](https://github.com/royal-statistical-society/datavisguide)
+[![SciencePlots stars](https://img.shields.io/github/stars/garrettj403/SciencePlots?style=flat&label=SciencePlots%20stars)](https://github.com/garrettj403/SciencePlots)
 
-[English](README.en.md) · [安装与接入](docs/installation.md) · [使用指南](docs/usage.md) · [示例数据](examples/README.md) · [贡献指南](CONTRIBUTING.md)
+**将英国皇家统计学会的数据可视化指南与 SciencePlots 转化为可执行的科研绘图与审查 Skill。**
 
-## 功能
+从实验数据、已有图或绘图代码出发，完成表达审查、图表修订与可复现交付。兼容不同模型与 Agent 工具，不预设学科或数据单位。
 
-| 模式 | 输入 | 输出 |
+[English](README.en.md) · [审查案例](examples/review-case/README.md) · [安装与接入](docs/installation.md) · [使用指南](docs/usage.md) · [贡献指南](CONTRIBUTING.md)
+
+## 上游基础
+
+| 上游项目 | 项目来源 | 本 Skill 的使用方式 |
 |---|---|---|
-| 图表生成 | 实验数据、字段定义、单位、比较目标 | PNG/PDF/SVG、绘图代码、配置及处理记录 |
-| 图表审查 | 图片、图注、使用要求 | 问题定位、依据、修改建议及核验范围 |
-| 代码改进 | Matplotlib 脚本、输入数据、修改要求 | 新版脚本、图表及变更说明 |
+| **[RSS Data Visualisation Guide](https://github.com/royal-statistical-society/datavisguide)** | 英国皇家统计学会发布的《Best Practices for Data Visualisation》 | 将坐标、比例、配色、可访问性和标注原则整理为 12 项可追溯审查规则 |
+| **[SciencePlots](https://github.com/garrettj403/SciencePlots)** | John Garrett 等贡献者维护的 Matplotlib 科研绘图样式库 | 使用真实样式依赖完成排版，提供无 LaTeX 默认配置、字体检查与尺寸保留导出 |
 
-内置时间序列对比、预测值与真实值散点图、分条件指标对比三个绘图入口。适用于论文、报告与学术演示，不预设学科或数据单位。
+在此基础上，本项目增加 **6 项数据与科研约束**，以及共同样本处理、缺失记录、可执行绘图和代码交付。完整映射见 [审查规则](skills/research-figure/references/review-rules.md)，引用版本与许可见 [来源记录](skills/research-figure/references/sources.md)。上方 Stars 徽章展示的是 SciencePlots 上游数据；本项目为独立下游项目。
 
-## 示例
+## 审查案例
 
-| 时间序列 | 预测对比 | 指标对比 |
+**同一份数据，图表表达可能改变读者对结果的判断。**
+
+下例两侧均使用 SciencePlots。左侧截断柱图基线并省略已有误差线；右侧由本项目绘图入口恢复零基线、展示所提供的 SD，并增加纹理区分。
+
+![相同模拟数据的柱图审查前后对照](docs/images/review-metrics.png)
+
+最后一组数值为 **3.3 与 5.2**。从 3 开始的截断轴将可见柱长比放大到约 **7.33∶1**；恢复零基线后为原始数值比约 **1.58∶1**。修订没有改变这些数值。
+
+| 案例 | 具体问题 | 修订结果 | 依据 |
+|---|---|---|---|
+| [指标对比](examples/review-case/README.md#指标对比) | 截断基线放大差异；省略已提供的 SD | 保留零点、展示误差定义、增加纹理 | RSS 改编规则 R03/R08；项目规则 D03 |
+| [预测对比](examples/review-case/README.md#预测对比) | 两个模型分别使用 90/89 个样本；坐标比例不一致 | 统一为 89 个共同有效样本，记录排除行；等比例坐标与 y=x | R02；D01/D02 |
+| [时间序列](examples/review-case/README.md#时间序列) | 缺失点和时间缺口被直接连接 | 保留 1 个缺失预测点及 2 条缺失时间记录形成的断线 | 项目规则 D02；R08 |
+
+这些是使用模拟数据构造的教学反例，用于展示规则作用，不是对其他工具或模型的效果测评。审查前后图、逐项说明、复现脚本与验证记录均在 [完整案例](examples/review-case/README.md) 中公开。样本口径等问题需要结合数据或代码核对，不能仅凭截图确定。
+
+## 工作流程
+
+**输入数据或图表 → 核对表达与样本 → 执行修订 → 查看导出结果 → 交付代码与记录**
+
+| 模式 | 输入 | 交付 |
 |---|---|---|
-| ![时间序列示例](docs/images/timeseries.png) | ![预测散点示例](docs/images/parity.png) | ![指标对比示例](docs/images/metrics.png) |
+| 图表生成 | 数据、字段定义、单位、比较目标 | PNG/PDF/SVG、绘图脚本、配置与处理记录 |
+| 图表审查 | 图片、图注；有条件时提供数据和代码 | 问题位置、规则依据、修改建议及核验范围 |
+| 代码改进 | Matplotlib 脚本、输入数据、修改要求 | 新版代码、修订图表及变更说明 |
 
-示例使用模拟数据；`a.u.` 表示任意单位。对应 [CSV 与配置](examples/README.md) 可用于复现。
+内置时间序列、预测散点和分条件指标三个入口。规则指导模型审查，脚本负责确定性的数据处理与渲染；复杂图形需要另行编写和验证代码。
 
 ## 安装与兼容性
 

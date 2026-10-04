@@ -199,8 +199,11 @@ def prepare(c, fields, rows):
     return {"categories": categories, "models": models, "entries": entries}, log
 
 
-def draw(c, data):
-    fig, ax = plt.subplots(layout="constrained")
+def draw(c, data, ax=None):
+    if ax is None:
+        fig, ax = plt.subplots(layout="constrained")
+    else:
+        fig = ax.figure
     labels = c.get("labels", {})
     if c["kind"] == "timeseries":
         for i, name in enumerate(c["series"]):
